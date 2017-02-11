@@ -26,30 +26,29 @@ def home():
     """Render website's home page."""
     return render_template('home.html')
 
-
+@app.route('/')
 @app.route('/about/')
 def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
 
 
-@app.route('/contact', methods= ['GET','POST'])
+@app.route('/contact/', methods= ['GET','POST'])
 def contact():
     if request.method == 'POST':
             name= request.form['name']
-            email= request.form['email']
+            flash("Message Successfull Sent")
             subject= request.form['subject']
             message= request.form['message']
             
             send_email(name,email,subject,message)
             
-            flash("Message Successfully Sent")
+            flash("Message Successfull Sent")
             
-            return redirect(url_for('home')) 
+            return render_template({{ url_for('home') }}) 
            
     else:
             error = 'MADNIS!'
-            flash(error)
             return render_template('contact.html', error=error)
 
 ###
@@ -81,11 +80,11 @@ def page_not_found(error):
     
     
 def send_email(from_name, from_email, subject, msg):
-    to_addr= 'jhenaidixon07@gmail.com'
+    to_addr= 'jhenaidixon@ymail.com'
     to_name= "jhenai"
     message_to_send = message.format(from_name, from_email, to_name, to_addr, subject, msg)
-    username = 'jhenaidixon07@gmail.com'
-    password = 'wffdieuihcxnczvw'
+    username = 'jhenaidixon@gmail.com'
+    password = 'jfcvzbgjrppunznp'
     # The actual mail send
     server = smtplib.SMTP('smtp.gmail.com',587)
     server.starttls()
